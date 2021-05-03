@@ -29,10 +29,13 @@ class WorkspaceManager {
             return [];
           }
 
+
           let settings = new WorkspaceSettings(
             path.join(workspacesDirectory, file),
             path.join(workspacesDirectory, file, "chaindata"),
           );
+
+          console.log('settings', settings);
 
           const isQuickstart = settings.get("isDefault");
           if (isQuickstart) {
@@ -64,6 +67,8 @@ class WorkspaceManager {
             }
           }
           const flavor = settings.get("flavor");
+          console.log('flavor', flavor);
+          console.log('settings obj', settings.get('name'));
           return [new Workspace(name, this.directory, flavor)];
         });
     }
@@ -71,6 +76,7 @@ class WorkspaceManager {
     this.workspaces.push(new Workspace(null, this.directory, "ethereum"));
     this.workspaces.push(new Workspace(null, this.directory, "corda"));
     this.workspaces.push(new Workspace(null, this.directory, "filecoin"));
+    this.workspaces.push(new Workspace(null, this.directory, "harmony-one"));
   }
 
   bootstrap() {

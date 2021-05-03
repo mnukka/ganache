@@ -74,6 +74,7 @@ export const getBlockSubscription = function() {
     );
 
     subscription.on("data", blockHeader => {
+      console.log("BLOCK HEADER!!!!")
       let currentBlockNumber = getState().core.latestBlock;
 
       if (blockHeader.number != currentBlockNumber) {

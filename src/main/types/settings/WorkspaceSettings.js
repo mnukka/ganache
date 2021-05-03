@@ -6,6 +6,7 @@ const oldDefaultMnemonic = "candy maple cake sugar pudding cream honey rich smoo
 const ethereumInitialSettings = require("./flavors/ethereum");
 const cordaInitialSettings = require("./flavors/corda");
 const filecoinInitialSettings = require("./flavors/filecoin");
+const hmyInitialSettings = require("./flavors/harmony-one");
 
 class WorkspaceSettings extends Settings {
   constructor(directory, chaindataDirectory, flavor = "ethereum") {
@@ -21,6 +22,10 @@ class WorkspaceSettings extends Settings {
       }
       case "filecoin": {
         initialSettings = filecoinInitialSettings;
+        break;
+      }
+      case "harmony-one": {
+        initialSettings = hmyInitialSettings;
         break;
       }
       default: {

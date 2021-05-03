@@ -27,6 +27,18 @@ import {
   setBlockNumberToLatest,
 } from "../../integrations/ethereum/common/redux/core/actions";
 
+
+import {
+  //SET_BLOCK_NUMBER,
+  //SET_KEY_DATA,
+  //getGasPrice,
+  //getGasLimit,
+  getBlockSubscription as getBlockSubscriptionHarmonyOne,
+  setBlockNumber as setBlockNumberHarmonyOne,
+  //setKeyData,
+  //setBlockNumberToLatest,
+} from "../../integrations/harmony-one/common/redux/core/actions";
+
 import {
   SET_TIPSET_NUMBER,
   SET_KEY_DATA as FILECOIN_SET_KEY_DATA,
@@ -44,6 +56,7 @@ import {
 } from "../../integrations/filecoin/common/redux/core/actions";
 
 import { getAccounts } from "../../integrations/ethereum/common/redux/accounts/actions";
+import { getAccounts as getAccountsHarmonyOne } from "../../integrations/harmony-one/common/redux/accounts/actions";
 
 import {
   setSettings,
@@ -80,6 +93,25 @@ export function initCore(store) {
         store.dispatch(getGasLimit());
 
         store.dispatch(getBlockSubscription());
+
+        store.dispatch(setServerStarted());
+      } else if (workspaceSettings.flavor == "harmony-one") {
+        console.log("CORE HARMONY!");
+        const hostname = workspaceSettings.server.hostname.replace(
+          "0.0.0.0",
+          "localhost",
+        );
+        const url = `ws://${hostname}:${workspaceSettings.server.port}`;
+
+        ipcRenderer.send("web3-provider", url);
+        store.dispatch(setRPCProviderUrl(url));
+
+        store.dispatch(setBlockNumberToLatest());
+        store.dispatch(getAccountsHarmonyOne());
+        store.dispatch(getGasPrice());
+        store.dispatch(getGasLimit());
+
+        store.dispatch(getBlockSubscriptionHarmonyOne());
 
         store.dispatch(setServerStarted());
       } else if (workspaceSettings.flavor === "filecoin") {
@@ -121,6 +153,8 @@ export function initCore(store) {
             store.dispatch(replace("/corda/nodes"));
           } else if (workspaceSettings.flavor === "filecoin") {
             store.dispatch(replace("/filecoin/accounts"));
+          } else if  (workspaceSettings.flavor === "harmony-one") {
+            store.dispatch(replace("/harmony-one/accounts"));
           } else {
             store.dispatch(replace("/accounts"));
           }
@@ -158,7 +192,11 @@ export function initCore(store) {
   // Block polling happens in the chain process, and is passed through
   // the main process to the render process when there's a new block.
   ipcRenderer.on(SET_BLOCK_NUMBER, (event, number) => {
-    store.dispatch(setBlockNumber(number));
+    if (workspaceSettings.flavor == "ethereum") {
+      store.dispatch(setBlockNumber(number));
+    } else if (workspaceSettings.flavor == "harmony-one") {
+      store.dispatch(setBlockNumberHarmonyOne(number));
+    }
   });
 
   // The server will send a second message that sets the mnemonic and hdpath

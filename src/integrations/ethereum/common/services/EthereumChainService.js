@@ -41,6 +41,7 @@ class EthereumChainService extends EventEmitter {
             return;
           case "server-started":
             this._serverStarted = true;
+            console.log('EthereumChainService.server-started message', data);
             this.emit("server-started-data", data);
             this.emit("message", type, data);
             return;

@@ -190,6 +190,10 @@ class TopNavbar extends Component {
         children = this._generateEthereumChildren();
         break;
       }
+      case "harmony-one": {
+        children = this._generateHarmonyOneChildren();
+        break;
+      }
       case "corda": {
         children = this._generateCordaChildren();
         break;
@@ -200,7 +204,7 @@ class TopNavbar extends Component {
       }
     }
 
-    const hasSearch = flavor === "ethereum" || flavor === "filecoin";
+    const hasSearch = flavor === "ethereum" || flavor === "filecoin" || flavor === "harmony-one";
 
     return (
       <nav className="TopNavBar">
@@ -336,6 +340,98 @@ class TopNavbar extends Component {
     }
   }
 
+  _generateHarmonyOneChildren(){
+    const blockNumber = this.props.core.latestBlock;
+    const gasPrice = this.props.core.gasPrice;
+    const gasLimit = this.props.core.gasLimit;
+    const hardfork = this.props.config.settings.workspace.server.hardfork;
+    const snapshots = this.props.core.snapshots;
+    const isMining = this.props.core.isMining;
+    const miningPaused = !isMining;
+    const currentSnapshotId = snapshots.length;
+    const showControls = false;
+    const contractsClassname = this.props.location.pathname.startsWith("/contracts") ? "Active" : "";
+
+    return {
+      menu: (
+        <>
+          <NavLink to="/harmony-one/accounts" activeClassName="Active">
+            <AccountIcon />
+            Accounts
+          </NavLink>
+          <NavLink to="/blocks" activeClassName="Active">
+            <BlockIcon />
+            Blocks
+          </NavLink>
+          <NavLink to="/transactions" activeClassName="Active">
+            <TxIcon />
+            Transactions
+          </NavLink>
+          <NavLink to="/contracts" className={contractsClassname} activeClassName="Active">
+            <ContractsIcon />
+            Contracts
+          </NavLink>
+          <NavLink to="/events" activeClassName="Active">
+            <EventsIcon />
+            Events
+          </NavLink>
+        </>
+      ),
+      searchText: "SEARCH FOR BLOCK NUMBERS OR TX HASHES",
+      status: (
+        <>
+          <StatusIndicator title="CURRENT BLOCK" value={blockNumber} />
+          { this.props.config.settings.workspace.server.fork ?
+            (<StatusIndicator
+              title="FORK BLOCK"
+              tooltip={this.props.config.settings.workspace.server.fork}
+              value={this.props.config.settings.workspace.server.fork_block_number}
+            />) : ""
+          }
+          <StatusIndicator title="GAS PRICE" value={gasPrice} />
+          <StatusIndicator title="GAS LIMIT" value={gasLimit} />
+          <StatusIndicator title="HARDFORK" value={hardfork} />
+          <StatusIndicator
+            title="NETWORK ID"
+            value={this.props.config.settings.workspace.server.network_id}
+          />
+          <StatusIndicator
+            title="RPC SERVER"
+            value={`http://${
+              this.props.config.settings.workspace.server.hostname
+            }:${this.props.config.settings.workspace.server.port}`}
+          />
+          <StatusIndicator
+            title="MINING STATUS"
+            value={miningPaused ? "STOPPED" : this._renderMiningTime()}
+          />
+          <StatusIndicator
+            title="ADDRESS FORMAT"
+            value={miningPaused ? "ETH" : "BECH32"}
+          />
+        </>
+      ),
+      actions: (
+        <>
+          <OnlyIf test={showControls}>
+            <button className="MiningBtn" onClick={this._handleForceMine}>
+              <ForceMineIcon /*size={18}*/ /> Force Mine
+            </button>
+          </OnlyIf>
+          <OnlyIf test={showControls}>
+            <button className="MiningBtn" onClick={this._handleMakeSnapshot}>
+              <SnapshotIcon /*size={18}*/ /> TAKE SNAPSHOT #
+              {currentSnapshotId + 1}
+            </button>
+          </OnlyIf>
+          <OnlyIf test={showControls}>
+            {this._renderSnapshotControls()}
+          </OnlyIf>
+        </>
+      )
+    };
+  }
+
   _generateEthereumChildren(){
     const blockNumber = this.props.core.latestBlock;
     const gasPrice = this.props.core.gasPrice;
@@ -399,6 +495,10 @@ class TopNavbar extends Component {
           />
           <StatusIndicator
             title="MINING STATUS"
+            value={miningPaused ? "STOPPED" : this._renderMiningTime()}
+          />
+          <StatusIndicator
+            title="MINING STATUS 233"
             value={miningPaused ? "STOPPED" : this._renderMiningTime()}
           />
         </>

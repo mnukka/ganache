@@ -100,6 +100,7 @@ class HomeScreen extends Component {
         {this.createButton("Ethereum")}
         {this.createButton("Corda")}
         {this.createButton("Filecoin")}
+        {this.createButton("Harmony-One")}
       </div>);
     } else {
       if (this.state.buttonState === null){
@@ -246,6 +247,7 @@ class HomeScreen extends Component {
                   </div>
                 </div>
                 {this.state.flavor === "corda" ? <div style={{height:"0", overflow:"visible", color:"#aaa"}}><small><em>Note: Corda networks may utilize significant CPU and Memory during startup.</em></small></div> : ""}
+                {this.state.flavor === "harmony-one" ? <div style={{height:"0", overflow:"visible", color:"#aaa"}}><small><em>Note: This will start a fully fledged Harmony One localnet so this could take about a minute to start.</em></small></div> : ""}
               </section>
             </div>
             {/* <div className="LearnMore">{learnMore}</div> */}

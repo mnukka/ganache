@@ -50,6 +50,12 @@ async function stopServer() {
 
 async function startServer(options) {
   await stopServer();
+
+
+
+  const { spawn } = require('child_process');
+  const child = spawn('docker', ['logs', '--follow', 'ethereum-blockchain']);
+  console.log(child);
   
   let sanitizedOptions = Object.assign({}, options);
   delete sanitizedOptions.mnemonic;
@@ -117,7 +123,7 @@ async function startServer(options) {
       process.send({ type: "start-error", data: {code: err.code, stack: err.stack, message: err.message} });
       return;
     }
-
+    
     const state = result ? result : server.provider.manager.state;
     dbLocation = state.blockchain.data.directory;
 
@@ -138,7 +144,7 @@ async function startServer(options) {
       privateKeys[address] = accounts[address].secretKey.toString("hex");
     });
 
-    const data = Object.assign({}, server.provider.options);
+    let data = Object.assign({}, server.provider.options);
 
     // delete anything which might've been in the ganache-core options object
     // that we don't want to pass on to the main process

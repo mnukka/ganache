@@ -8,11 +8,12 @@ export const query = function(message, flavor) {
     // do nothing if user submits empty search string
     if (message === "") return;
 
-    if (flavor === "ethereum") {
+    if (flavor === "ethereum" || flavor === "harmony-one") {
       let web3Instance = getState().web3.web3Instance;
       // This will request the block by either its has or number
       try {
         let block = await web3Request("getBlock", [message, true], web3Instance);
+        console.log('web3Request response of getBlock', block);
         dispatch(push(`/blocks/${block.number}`));
         return;
       } catch (err) {

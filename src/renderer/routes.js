@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router";
 import AppShell from "./screens/appshell/AppShell";
 import ConfigScreen from "./screens/config/ConfigScreen";
 import AccountsScreen from "../integrations/ethereum/renderer/screens/accounts/AccountsScreen";
+import HarmonyOneAccountsScreen from "../integrations/harmony-one/renderer/screens/accounts/AccountsScreen";
 
 import CordaNodes from "../integrations/corda/renderer/screens/Nodes";
 import CordaNode from "../integrations/corda/renderer/screens/NodeDetails";
@@ -83,6 +84,8 @@ class FlavorRoutes extends Component {
         <Route exact path="/filecoin/messages/:messageCid" component={MessagesScreen} />
         <Route exact path="/filecoin/deals" component={DealsScreen} />
         <Route exact path="/filecoin/files" component={FilesScreen} />
+
+        <Route path="/harmony-one/accounts" component={HarmonyOneAccountsScreen} />
       </Switch>
     </AppShell>
   }

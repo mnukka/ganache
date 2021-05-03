@@ -2,6 +2,7 @@ import path from "path";
 import ethereum from "./ethereum";
 import corda from "./corda";
 import filecoin from "./filecoin";
+import hmy from "./harmony-one";
 import EventEmitter from "events";
 import WorkspaceManager from "../main/types/workspaces/WorkspaceManager";
 import extras from "../common/extras";
@@ -21,7 +22,8 @@ class IntegrationManager extends EventEmitter {
     this.integrations = {
       ethereum,
       corda,
-      filecoin
+      filecoin,
+      'harmony-one': hmy
     };
     this.workspaceManager = new WorkspaceManager(userDataPath);
     this._listen();

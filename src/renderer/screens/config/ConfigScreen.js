@@ -73,6 +73,10 @@ class ConfigScreen extends PureComponent {
         tabs = ETHEREUM_TABS;
         break;
       }
+      case "harmony-one": {
+        tabs = ETHEREUM_TABS;
+        break;
+      }
       case "corda": {
         tabs = CORDA_TABS;
         break;

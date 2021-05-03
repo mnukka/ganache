@@ -21,6 +21,7 @@ export async function web3Request(name, args, web3Instance) {
 }
 
 export async function web3ActionCreator(dispatch, getState, name, args) {
+  console.log('ETHEREUM web3ActionCreator', name, args);
   // This specifically pulls state from the web3 reducer. Smell?
   let web3Instance = getState().web3.web3Instance;
   // TODO: ETHEREUM
