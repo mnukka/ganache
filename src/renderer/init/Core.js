@@ -96,7 +96,6 @@ export function initCore(store) {
 
         store.dispatch(setServerStarted());
       } else if (workspaceSettings.flavor == "harmony-one") {
-        console.log("CORE HARMONY!");
         const hostname = workspaceSettings.server.hostname.replace(
           "0.0.0.0",
           "localhost",
