@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { toBech32, fromBech32 } from "@harmony-js/crypto";
 
 export default class DestinationAddress extends Component {
   render() {
@@ -26,7 +27,7 @@ export default class DestinationAddress extends Component {
               <span>{this.props.receipt.contractAddress}</span>
             </div>
           ) : (
-            <div>{this.props.contractName || this.props.tx.to}</div>
+            <div>{this.props.contractName || toBech32(this.props.tx.to)}</div>
           )}
         </div>
       </div>

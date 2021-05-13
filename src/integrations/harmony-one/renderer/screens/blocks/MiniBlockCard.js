@@ -12,7 +12,7 @@ export default class MiniBlockCard extends PureComponent {
     const cardStyles = `MiniBlockCard ${hasTxs ? "HasTxs" : ""}`;
 
     return (
-      <Link to={`/blocks/${this.props.block.number}`} className="Link">
+      <Link to={`/harmony-one/blocks/${this.props.block.number}`} className="Link">
         <section className={cardStyles} key={`block_${block.number}_detail`}>
           <div className="RowItem">
             <div className="BlockNumber">

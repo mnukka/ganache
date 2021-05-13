@@ -7,6 +7,9 @@ import DestinationAddress from "./DestinationAddress";
 
 import OnlyIf from "../../../../../renderer/components/only-if/OnlyIf";
 
+import { toBech32, fromBech32 } from "@harmony-js/crypto";
+import FormattedEtherValue from "../../components/formatted-ether-value/FormattedEtherValue";
+
 export default class MiniTxCard extends Component {
   render() {
     let { tx, receipt, contractName } = this.props;
@@ -20,7 +23,7 @@ export default class MiniTxCard extends Component {
     }
 
     return (
-      <Link to={`/transactions/${tx.hash}`} className="Link">
+      <Link to={`/harmony-one/transactions/${tx.hash}`} className="Link">
         <div className="MiniTxCard">
           <div className="Row Top">
             <div className="RowItem">
@@ -42,7 +45,7 @@ export default class MiniTxCard extends Component {
               <div className="RowItem">
                 <div className="From">
                   <div className="Label">FROM ADDRESS</div>
-                  <div className="Value">{tx.from}</div>
+                  <div className="Value">{toBech32(tx.from)}</div>
                 </div>
               </div>
 
@@ -66,7 +69,7 @@ export default class MiniTxCard extends Component {
               <div className="RowItem">
                 <div className="Value">
                   <div className="Label">VALUE</div>
-                  <div className="Value">{tx.value.toString()}</div>
+                  <div className="Value"><FormattedEtherValue value={tx.value} /></div>
                 </div>
               </div>
 

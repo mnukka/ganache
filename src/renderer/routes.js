@@ -15,7 +15,9 @@ import CordaCordapps from "../integrations/corda/renderer/screens/Cordapps";
 import CordaCordapp from "../integrations/corda/renderer/screens/Cordapp";
 
 import BlocksScreen from "../integrations/ethereum/renderer/screens/blocks/BlocksScreen";
+import HarmonyOneBlocksScreen from "../integrations/harmony-one/renderer/screens/blocks/BlocksScreen";
 import TransactionsScreen from "../integrations/ethereum/renderer/screens/transactions/TransactionsScreen";
+import HarmonyOneTransactionsScreen from "../integrations/harmony-one/renderer/screens/transactions/TransactionsScreen";
 import LogsScreen from "./screens/logs/LogsScreen";
 import EventsScreen from "../integrations/ethereum/renderer/screens/events/EventsScreen";
 import ContractDetails from "../integrations/ethereum/renderer/screens/contracts/ContractDetails";
@@ -86,6 +88,11 @@ class FlavorRoutes extends Component {
         <Route exact path="/filecoin/files" component={FilesScreen} />
 
         <Route path="/harmony-one/accounts" component={HarmonyOneAccountsScreen} />
+        <Route path="/harmony-one/blocks/:blockNumber?" component={HarmonyOneBlocksScreen} />
+        <Route
+          path="/harmony-one/transactions/:transactionHash?"
+          component={HarmonyOneTransactionsScreen}
+        />
       </Switch>
     </AppShell>
   }

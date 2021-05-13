@@ -12,6 +12,8 @@ import FormattedEtherValue from "../../components/formatted-ether-value/Formatte
 import EventList from "../events/EventList";
 import OnlyIf from "../../../../../renderer/components/only-if/OnlyIf";
 
+import { toBech32, fromBech32 } from "@harmony-js/crypto";
+
 class TxCard extends Component {
   constructor(props) {
     super(props);
@@ -100,8 +102,8 @@ class TxCard extends Component {
 
           <section className="Parties">
             <div className="From">
-              <div className="Label">SENDER ADDRESS</div>
-              <div className="Value">{tx.from}</div>
+              <div className="Label">SENDER ADDRESS 2</div>
+              <div className="Value">{toBech32(tx.from)}</div>
             </div>
             <DestinationAddress tx={tx} receipt={receipt} />
             <div>

@@ -359,11 +359,11 @@ class TopNavbar extends Component {
             <AccountIcon />
             Accounts
           </NavLink>
-          <NavLink to="/blocks" activeClassName="Active">
+          <NavLink to="/harmony-one/blocks" activeClassName="Active">
             <BlockIcon />
             Blocks
           </NavLink>
-          <NavLink to="/transactions" activeClassName="Active">
+          <NavLink to="/harmony-one/transactions" activeClassName="Active">
             <TxIcon />
             Transactions
           </NavLink>
