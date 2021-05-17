@@ -54,13 +54,15 @@ async function stopServer() {
 
 async function stopContainer() {
   console.log('Stopping docker container...');
+  process.send({ type: "stopping-container" });
   await exec('docker rm -f harmony-localnet-ganache');
 }
 
 async function startContainer() {
   await stopContainer();
-  console.log('Starting docker container');
-  //return exec('docker run -d --rm --name child-test child/test');
+  process.send({type: "starting-container"});
+
+  // TODO: Get ports from configuration
   return exec('docker run --name harmony-localnet-ganache --rm -d  -p 9500:9500 -p 9800:9800 -p 9801:9801 -p 9501:9501 harmonyone/localnet-ganache');
 }
 
@@ -214,17 +216,18 @@ async function startServer(options) {
         '0x50c481fdc307125f5b075acc5e37109576e7b4bd':'5709f12bc34677a96ed3f01898329eedb0d78a499159ad5a541cdce8c77a3de3',
       }
     }
-
-    console.log("Ganache started successfully!");
-    console.log("Waiting for requests...");
   });
 
+  let counter = 0;
   const proc = spawn('docker', 'logs --follow harmony-localnet-ganache'.split(' '))
   proc.stdout.on('data', function (data) {
       console.log(`Container Log: ${data}`);
       if (data.includes('Initialization of localnet completed')) {
           console.log('Initialization complete!');
           process.send({ type: "server-started", data: data });
+      } else {
+        counter += 1;  
+        process.send({ type: "checking-status", data: counter});
       }
   });
 
@@ -244,7 +247,6 @@ function getDbLocation() {
 }
 
 process.on("message", (message) => {
-  //console.log("CHILD RECEIVED", message)
   switch (message.type) {
     case "start-server":
       startServer(message.data);

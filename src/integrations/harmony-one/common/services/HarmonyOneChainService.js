@@ -36,6 +36,16 @@ class HarmonyOneChainService extends EventEmitter {
 
         const {type, data} = msg || {};
         switch (type) {
+          case "stopping-container":
+            this.emit("message", "progress", "Stopping previous localnet Docker container...");
+            return;
+          case "starting-container":
+            this.emit("message", "progress", "Starting localnet Docker container...");
+          return;
+          case "checking-status":
+            let progress = '.'.repeat(data);
+            this.emit("message", "progress", `Waiting for localnet to be ready${progress}`);
+            return;
           case "process-started":
             this.emit("message", "start");
             return;
@@ -46,9 +56,6 @@ class HarmonyOneChainService extends EventEmitter {
             return;
           case "server-stopped":
             this._serverStarted = false;
-            this.emit(type, data);
-            return;
-          case "db-location":
             this.emit(type, data);
             return;
         }
