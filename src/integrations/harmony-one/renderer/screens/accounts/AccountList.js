@@ -65,6 +65,7 @@ class AccountList extends Component {
             <span
               className="ShowKeys popover-container"
               onClick={() => {
+                console.log('PROPS ARE', self.props);
                 self.showKeys(
                   account,
                   // need to pass lower case account here because account is

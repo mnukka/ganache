@@ -15,14 +15,12 @@
 // }
 
 export async function web3Request(name, args, web3Instance) {
-  console.log('web3Request', name, args);
   let fn = web3Instance.eth[name];
 
   return await fn.apply(web3Instance.eth, args);
 }
 
 export async function web3ActionCreator(dispatch, getState, name, args) {
-  console.log('HARMONY web3ActionCreator', name, args);
   // This specifically pulls state from the web3 reducer. Smell?
   let web3Instance = getState().web3.web3Instance;
   // TODO: ETHEREUM
