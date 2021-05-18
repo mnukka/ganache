@@ -8,7 +8,7 @@ import {
 import { GET_DECODED_EVENT } from "../events/actions";
 
 const prefix = "TRANSACTIONS";
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 1000;
 
 export const CLEAR_TRANSACTIONS_IN_VIEW = `${prefix}/CLEAR_TRANSACTIONS_IN_VIEW`;
 export const clearTransactionsInView = function() {
@@ -23,10 +23,7 @@ export const requestPage = function(startBlockNumber, endBlockNumber) {
       startBlockNumber = getState().core.latestBlock;
     }
 
-    let earliestBlockRequested = Math.max(
-      startBlockNumber - PAGE_SIZE,
-      endBlockNumber,
-    );
+    let earliestBlockRequested = endBlockNumber;
     dispatch(
       getTransactionsForBlocks(earliestBlockRequested, startBlockNumber),
     );

@@ -45,6 +45,10 @@ const ETHEREUM_TABS = [
   { name: "Advanced", subRoute: "advanced", component: AdvancedScreen }
 ];
 
+const HARMONY_TABS = [
+  { name: "Workspace", subRoute: "workspace", component: EthereumWorkspaceScreen }  
+];
+
 const CORDA_TABS = [
   { name: "Workspace", subRoute: "corda/workspace", component: CordaWorkspaceScreen },
   { name: "Nodes", subRoute: "corda/nodes", component: NodesScreen, data:{type: "nodes"} },
@@ -74,7 +78,7 @@ class ConfigScreen extends PureComponent {
         break;
       }
       case "harmony-one": {
-        tabs = ETHEREUM_TABS;
+        tabs = HARMONY_TABS;
         break;
       }
       case "corda": {

@@ -26,6 +26,7 @@ export const setWorkspaces = function(workspaces) {
 export const CLOSE_WORKSPACE = `${prefix}/CLOSE_WORKSPACE`;
 export const closeWorkspace = function() {
   return function(dispatch, getState) {
+    console.log("CLOSE WORKSPACE!!!");
     cleanupWorkspace(dispatch, getState);
 
     dispatch({ type: CLOSE_WORKSPACE });

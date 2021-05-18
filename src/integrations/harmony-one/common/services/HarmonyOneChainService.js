@@ -44,7 +44,7 @@ class HarmonyOneChainService extends EventEmitter {
           return;
           case "checking-status":
             let progress = '.'.repeat(data);
-            this.emit("message", "progress", `Waiting for localnet to be ready${progress}`);
+            this.emit("message", "progress", `Waiting for localnet to be ready${progress}`, 500);
             return;
           case "process-started":
             this.emit("message", "start");
