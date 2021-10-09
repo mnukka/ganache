@@ -63,13 +63,10 @@ async function startContainer() {
   process.send({ type: "starting-container" });
 
   // TODO: Get ports from configuration
-  return exec('docker run --name harmony-localnet-ganache --rm -d  -p 9500:9500 -p 9800:9800 -p 9801:9801 -p 9501:9501 harmonyone/localnet-ganache');
+  return exec('docker run --name harmony-localnet-ganache --rm -d  -p 9500:9500 -p 9800:9800 -p 9801:9801 -p 9501:9501 harmonyone/localnet-ganache -k');
 }
 
 async function startServer(options) {
-  await stopServer();
-
-  await startContainer();
 
   let sanitizedOptions = Object.assign({}, options);
   delete sanitizedOptions.mnemonic;
@@ -177,11 +174,10 @@ async function startServer(options) {
     data.privateKeys = privateKeys;
   });
 
-  let counter = 0;
   const proc = spawn('docker', 'logs --follow harmony-localnet-ganache'.split(' '))
   proc.stdout.on('data', function (stdoutData) {
     console.log(`Container Log: ${stdoutData}`);
-    if (stdoutData.includes('Initialization of localnet completed')) {
+
       console.log('Initialization complete!');
       const serverStartedData = {
         _chainId: 1,
@@ -224,10 +220,7 @@ async function startServer(options) {
         }
       }
       process.send({ type: "server-started", data: serverStartedData });
-    } else {
-      counter += 1;
-      process.send({ type: "checking-status", data: counter });
-    }
+
   });
 
   proc.on('close', function () {

@@ -1,6 +1,9 @@
-<p align="center">
-  <img src="https://github.com/trufflesuite/ganache/blob/develop/static/icons/png/128x128.png?raw=true")
-</p>
+##
+I have removed docker container stopping/starting from ganache.
+
+Follow the instructions first from https://github.com/mnukka/harmony-one-testnet and make sure localnet is running before starting ganache.
+
+Ganache itself runs with npm instructions given 
 
 ## Ganache
 
@@ -27,7 +30,7 @@ Requirements:
 To get started:
 
 0. Clone this repo
-0. Run `npm install`
+0. Run `npm install` (pay attention to error message if you get one - to run with deprecation mode)
 0. Run `npm run dev`
 
 If using Windows, you may need [windows-build-tools](https://www.npmjs.com/package/windows-build-tools) installed first.
